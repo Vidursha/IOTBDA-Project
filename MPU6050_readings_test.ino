@@ -41,6 +41,7 @@ void setup() {
   delay(100);
 
   Serial.println("Sensor initialized.");
+  Serial.println("accel_x,accel_y,accel_z,gyro_x,gyro_y,gyro_z");
 }
 
 void loop() {
@@ -52,18 +53,16 @@ void loop() {
   gyroY = read16Bit(GYRO_XOUT_H + 2);
   gyroZ = read16Bit(GYRO_XOUT_H + 4);
 
-  Serial.print("Accel X: ");
   Serial.print(accelX);
-  Serial.print(" | Y: ");
+  Serial.print(",");
   Serial.print(accelY);
-  Serial.print(" | Z: ");
+  Serial.print(",");
   Serial.print(accelZ);
-
-  Serial.print(" || Gyro X: ");
+  Serial.print(",");
   Serial.print(gyroX);
-  Serial.print(" | Y: ");
+  Serial.print(",");
   Serial.print(gyroY);
-  Serial.print(" | Z: ");
+  Serial.print(",");
   Serial.println(gyroZ);
 
   delay(1000);
