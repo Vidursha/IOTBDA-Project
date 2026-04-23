@@ -1,123 +1,85 @@
-# 🌐 IoTBDA Project -- Sensor Integration & Hardware Setup
+# 📡 Sensor Integration & Data Logging System
 
-## 📌 Project Overview
+## 📌 Overview
 
-This project is part of the **IoT and Big Data Analytics (IoTBDA)**
-module.\
-The goal of this project is to integrate multiple biomedical and
-environmental sensors with a **microcontroller (ESP32)** and prepare the
-system for data acquisition.
+This project implements a **multi-sensor data collection system** using an Arduino and a Python script. It captures real-time data from multiple sensors and logs it into a CSV file for further analysis.
 
-The sensors used in this project include:
+---
 
--   **MPU6050** -- Motion tracking (Accelerometer + Gyroscope)
--   **MAX30100** -- Heart Rate & SpO₂ monitoring
--   **MLX90614** -- Infrared temperature sensor
+## 🚀 Features
 
-All sensors communicate with the **ESP32 microcontroller using the I2C
-protocol**.\
-The team collaboratively completed the **hardware setup and wiring
-stage**, ensuring that the sensors were correctly connected and ready
-for data acquisition.
+* 🌡️ Temperature sensor data collection
+* ❤️ Pulse sensor (IR/Red) monitoring
+* 🎤 Microphone/audio signal capture
+* 🔌 Serial communication between Arduino and Python
+* 📄 Automatic CSV data logging
 
-------------------------------------------------------------------------
+---
 
-# 🔧 Hardware Components
+## 🛠️ Tech Stack
 
-  Component      Description
-  -------------- ---------------------------------------------------------
-  ESP32          Microcontroller used to interface with sensors
-  MPU6050        Motion sensor for acceleration and gyroscope data
-  MAX30100       Sensor for heart rate and oxygen saturation
-  MLX90614       Infrared sensor for non-contact temperature measurement
-  Breadboard     Used to prototype the circuit
-  Jumper Wires   Used for connecting sensors to ESP32
+* **Arduino (C/C++)** – Sensor data acquisition
+* **Python** – Serial communication & data logging
+* **CSV** – Data storage format
 
-------------------------------------------------------------------------
+---
 
-# ⚙️ Communication Protocol
+## 📂 Project Structure
 
-All sensors are connected using **I2C communication**, which uses two
-main lines:
+```
+Contact_Validation/
+│── arduino/
+│   └── sensor_reader.ino
+│── python/
+│   └── serial_logger.py
+│── data/
+│   ├── data_raw.csv
+│   └── data_with_timestamps.csv 
+│── README.md
+```
 
--   **SDA (Serial Data Line)** -- Data transmission
--   **SCL (Serial Clock Line)** -- Clock synchronization
+---
 
-Additional required connections: - **VCC** -- Power supply - **GND** --
-Ground reference
+## ⚙️ Setup Instructions
 
-------------------------------------------------------------------------
+### 1️⃣ Arduino Setup
 
-# 👨‍💻 Team Work Distribution (Hardware Setup & Wiring)
+* Connect sensors:
 
-## 1️⃣ Dayana Priyadharshani Kumar -- IT22178640
+  * Temperature sensor
+  * Pulse sensor
+  * Microphone module
+* Upload the Arduino sketch:
 
--   Participated in the **hardware setup of the ESP32 microcontroller**
--   Assisted in wiring **MPU6050, MAX30100, and MLX90614 sensors**
--   Verified **VCC, GND, SDA, and SCL connections** for all sensors
--   Ensured sensors were **properly powered and securely connected** on
-    the breadboard
+  ```bash
+  sensor_reader.ino
+  ```
 
-------------------------------------------------------------------------
+---
 
-## 2️⃣ Harishalinee Elangovan -- IT22057488
+### 2️⃣ Python Setup
 
--   Contributed to **ESP32 configuration and hardware preparation**
--   Assisted in connecting **MPU6050, MAX30100, and MLX90614 sensors**
--   Checked **pin connections and wiring stability**
--   Helped **identify and troubleshoot hardware connection issues**
+Install required dependencies:
 
-------------------------------------------------------------------------
+```bash
+pip install pyserial pandas
+```
 
-## 3️⃣ Vidursha Prabagaran -- IT22294098
+---
 
--   Assisted in **setting up the ESP32 microcontroller environment**
--   Participated in wiring **all three sensors**
--   Verified **I2C communication lines (SDA & SCL)**
--   Organized and secured the **breadboard circuit layout**
+### 3️⃣ Run the Logger
 
-------------------------------------------------------------------------
+```bash
+python serial_logger.py
+```
 
-## 4️⃣ Kaushalya Nagenthraraja -- IT22289384
+* Ensure the correct **COM port** is set in the script
+* Data will be saved automatically to `data_raw.csv (or data_with_timestamps.csv)`
 
--   Participated in the **overall hardware setup and wiring**
--   Assisted in connecting **MPU6050, MAX30100, and MLX90614 sensors**
--   Verified that **all sensors were correctly powered and connected**
--   Performed **final hardware validation checks** before proceeding to
-    the programming phase
+---
 
-------------------------------------------------------------------------
 
-# ✅ Current Project Progress
 
-✔ Hardware setup completed\
-✔ Sensor wiring verified\
-✔ I2C communication connections established
 
-### 🚧 Next Stage
 
--   Sensor calibration
--   Reading sensor values programmatically
--   Handling noisy or missing values
--   Packaging sensor data into **structured JSON format**
--   Integration with IoT data processing pipeline
-
-------------------------------------------------------------------------
-
-# 📚 Module
-
-**IoT and Big Data Analytics (IoTBDA)**
-
-------------------------------------------------------------------------
-
-# 👥 Team
-
--   Dayana Priyadharshani Kumar -- IT22178640
--   Harishalinee Elangovan -- IT22057488
--   Vidursha Prabagaran -- IT22294098
--   Kaushalya Nagenthraraja -- IT22289384
-
-------------------------------------------------------------------------
-
-⭐ *This project demonstrates the integration of IoT sensors with
-microcontrollers as a foundation for real-time data analytics.*
+This project is open-source and available under the MIT License.
