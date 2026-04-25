@@ -1,123 +1,73 @@
-# 🌐 IoTBDA Project -- Sensor Integration & Hardware Setup
+# React + TypeScript + Vite
 
-## 📌 Project Overview
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-This project is part of the **IoT and Big Data Analytics (IoTBDA)**
-module.\
-The goal of this project is to integrate multiple biomedical and
-environmental sensors with a **microcontroller (ESP32)** and prepare the
-system for data acquisition.
+Currently, two official plugins are available:
 
-The sensors used in this project include:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
--   **MPU6050** -- Motion tracking (Accelerometer + Gyroscope)
--   **MAX30100** -- Heart Rate & SpO₂ monitoring
--   **MLX90614** -- Infrared temperature sensor
+## React Compiler
 
-All sensors communicate with the **ESP32 microcontroller using the I2C
-protocol**.\
-The team collaboratively completed the **hardware setup and wiring
-stage**, ensuring that the sensors were correctly connected and ready
-for data acquisition.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-------------------------------------------------------------------------
+## Expanding the ESLint configuration
 
-# 🔧 Hardware Components
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-  Component      Description
-  -------------- ---------------------------------------------------------
-  ESP32          Microcontroller used to interface with sensors
-  MPU6050        Motion sensor for acceleration and gyroscope data
-  MAX30100       Sensor for heart rate and oxygen saturation
-  MLX90614       Infrared sensor for non-contact temperature measurement
-  Breadboard     Used to prototype the circuit
-  Jumper Wires   Used for connecting sensors to ESP32
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-------------------------------------------------------------------------
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-# ⚙️ Communication Protocol
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-All sensors are connected using **I2C communication**, which uses two
-main lines:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
--   **SDA (Serial Data Line)** -- Data transmission
--   **SCL (Serial Clock Line)** -- Clock synchronization
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-Additional required connections: - **VCC** -- Power supply - **GND** --
-Ground reference
-
-------------------------------------------------------------------------
-
-# 👨‍💻 Team Work Distribution (Hardware Setup & Wiring)
-
-## 1️⃣ Dayana Priyadharshani Kumar -- IT22178640
-
--   Participated in the **hardware setup of the ESP32 microcontroller**
--   Assisted in wiring **MPU6050, MAX30100, and MLX90614 sensors**
--   Verified **VCC, GND, SDA, and SCL connections** for all sensors
--   Ensured sensors were **properly powered and securely connected** on
-    the breadboard
-
-------------------------------------------------------------------------
-
-## 2️⃣ Harishalinee Elangovan -- IT22057488
-
--   Contributed to **ESP32 configuration and hardware preparation**
--   Assisted in connecting **MPU6050, MAX30100, and MLX90614 sensors**
--   Checked **pin connections and wiring stability**
--   Helped **identify and troubleshoot hardware connection issues**
-
-------------------------------------------------------------------------
-
-## 3️⃣ Vidursha Prabagaran -- IT22294098
-
--   Assisted in **setting up the ESP32 microcontroller environment**
--   Participated in wiring **all three sensors**
--   Verified **I2C communication lines (SDA & SCL)**
--   Organized and secured the **breadboard circuit layout**
-
-------------------------------------------------------------------------
-
-## 4️⃣ Kaushalya Nagenthraraja -- IT22289384
-
--   Participated in the **overall hardware setup and wiring**
--   Assisted in connecting **MPU6050, MAX30100, and MLX90614 sensors**
--   Verified that **all sensors were correctly powered and connected**
--   Performed **final hardware validation checks** before proceeding to
-    the programming phase
-
-------------------------------------------------------------------------
-
-# ✅ Current Project Progress
-
-✔ Hardware setup completed\
-✔ Sensor wiring verified\
-✔ I2C communication connections established
-
-### 🚧 Next Stage
-
--   Sensor calibration
--   Reading sensor values programmatically
--   Handling noisy or missing values
--   Packaging sensor data into **structured JSON format**
--   Integration with IoT data processing pipeline
-
-------------------------------------------------------------------------
-
-# 📚 Module
-
-**IoT and Big Data Analytics (IoTBDA)**
-
-------------------------------------------------------------------------
-
-# 👥 Team
-
--   Dayana Priyadharshani Kumar -- IT22178640
--   Harishalinee Elangovan -- IT22057488
--   Vidursha Prabagaran -- IT22294098
--   Kaushalya Nagenthraraja -- IT22289384
-
-------------------------------------------------------------------------
-
-⭐ *This project demonstrates the integration of IoT sensors with
-microcontrollers as a foundation for real-time data analytics.*
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
