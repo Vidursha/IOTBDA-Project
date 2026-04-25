@@ -1,0 +1,9 @@
+[
+  "temperature",
+  "ir",
+  "red",
+  "sound_rms",
+  "ir_red_ratio",
+  "sound_peak",
+  "sound_std"
+]
