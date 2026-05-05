@@ -1,123 +1,140 @@
-# 🌐 IoTBDA Project -- Sensor Integration & Hardware Setup
+# ESP32-C3 and Sensors Testing Branch
 
-## 📌 Project Overview
+This project demonstrates the setup and testing of the **ESP32-C3 Super Mini microcontroller** and integration with the **MPU6050 (Accelerometer + Gyroscope) sensor** using I2C communication.
 
-This project is part of the **IoT and Big Data Analytics (IoTBDA)**
-module.\
-The goal of this project is to integrate multiple biomedical and
-environmental sensors with a **microcontroller (ESP32)** and prepare the
-system for data acquisition.
+---
 
-The sensors used in this project include:
+## 🔧 Hardware Used
 
--   **MPU6050** -- Motion tracking (Accelerometer + Gyroscope)
--   **MAX30100** -- Heart Rate & SpO₂ monitoring
--   **MLX90614** -- Infrared temperature sensor
+* ESP32-C3 Super Mini
+* MPU6050 Sensor Module
+* Breadboard
+* Jumper Wires
+* USB Type-C Cable
 
-All sensors communicate with the **ESP32 microcontroller using the I2C
-protocol**.\
-The team collaboratively completed the **hardware setup and wiring
-stage**, ensuring that the sensors were correctly connected and ready
-for data acquisition.
+---
 
-------------------------------------------------------------------------
+## 🚀 Phase 1: ESP32-C3 Testing
 
-# 🔧 Hardware Components
+### Objective
 
-  Component      Description
-  -------------- ---------------------------------------------------------
-  ESP32          Microcontroller used to interface with sensors
-  MPU6050        Motion sensor for acceleration and gyroscope data
-  MAX30100       Sensor for heart rate and oxygen saturation
-  MLX90614       Infrared sensor for non-contact temperature measurement
-  Breadboard     Used to prototype the circuit
-  Jumper Wires   Used for connecting sensors to ESP32
+To verify that the ESP32-C3 board is working correctly and can communicate via Serial Monitor.
 
-------------------------------------------------------------------------
+### Output
 
-# ⚙️ Communication Protocol
+* Serial Monitor displayed:
 
-All sensors are connected using **I2C communication**, which uses two
-main lines:
+```
+ESP32-C3 is working
+ESP32-C3 is working
+...
+```
 
--   **SDA (Serial Data Line)** -- Data transmission
--   **SCL (Serial Clock Line)** -- Clock synchronization
+### Result
 
-Additional required connections: - **VCC** -- Power supply - **GND** --
-Ground reference
+✅ ESP32-C3 successfully initialized and serial communication verified.
 
-------------------------------------------------------------------------
+---
 
-# 👨‍💻 Team Work Distribution (Hardware Setup & Wiring)
+## 🔌 Phase 2: MPU6050 Sensor Integration
 
-## 1️⃣ Dayana Priyadharshani Kumar -- IT22178640
+### Objective
 
--   Participated in the **hardware setup of the ESP32 microcontroller**
--   Assisted in wiring **MPU6050, MAX30100, and MLX90614 sensors**
--   Verified **VCC, GND, SDA, and SCL connections** for all sensors
--   Ensured sensors were **properly powered and securely connected** on
-    the breadboard
+To interface MPU6050 with ESP32-C3 and read sensor data.
 
-------------------------------------------------------------------------
+---
 
-## 2️⃣ Harishalinee Elangovan -- IT22057488
+## 🔗 Wiring Connections
 
--   Contributed to **ESP32 configuration and hardware preparation**
--   Assisted in connecting **MPU6050, MAX30100, and MLX90614 sensors**
--   Checked **pin connections and wiring stability**
--   Helped **identify and troubleshoot hardware connection issues**
+| MPU6050 Pin | ESP32-C3 Pin |
+| ----------- | ------------ |
+| VCC         | 3.3V         |
+| GND         | GND          |
+| SDA         | GPIO 8       |
+| SCL         | GPIO 9       |
 
-------------------------------------------------------------------------
+---
 
-## 3️⃣ Vidursha Prabagaran -- IT22294098
+## 🔍 Step 1: I2C Scanner Test
 
--   Assisted in **setting up the ESP32 microcontroller environment**
--   Participated in wiring **all three sensors**
--   Verified **I2C communication lines (SDA & SCL)**
--   Organized and secured the **breadboard circuit layout**
+### Purpose
 
-------------------------------------------------------------------------
+To detect if the sensor is properly connected.
 
-## 4️⃣ Kaushalya Nagenthraraja -- IT22289384
+### Output
 
--   Participated in the **overall hardware setup and wiring**
--   Assisted in connecting **MPU6050, MAX30100, and MLX90614 sensors**
--   Verified that **all sensors were correctly powered and connected**
--   Performed **final hardware validation checks** before proceeding to
-    the programming phase
+```
+Device found at address 0x68
+```
 
-------------------------------------------------------------------------
+### Result
 
-# ✅ Current Project Progress
+✅ MPU6050 detected successfully.
 
-✔ Hardware setup completed\
-✔ Sensor wiring verified\
-✔ I2C communication connections established
+---
 
-### 🚧 Next Stage
+## ⚠️ Note on WHO_AM_I Register
 
--   Sensor calibration
--   Reading sensor values programmatically
--   Handling noisy or missing values
--   Packaging sensor data into **structured JSON format**
--   Integration with IoT data processing pipeline
+* Expected value: `0x68`
+* Observed value: `0x70`
 
-------------------------------------------------------------------------
+This indicates:
 
-# 📚 Module
+* The sensor responds correctly on I2C
+* But uses a slightly different internal ID (clone/variant)
 
-**IoT and Big Data Analytics (IoTBDA)**
+---
 
-------------------------------------------------------------------------
+## 📊 Step 2: Sensor Data Reading (Raw Registers)
 
-# 👥 Team
+### Code Approach
 
--   Dayana Priyadharshani Kumar -- IT22178640
--   Harishalinee Elangovan -- IT22057488
--   Vidursha Prabagaran -- IT22294098
--   Kaushalya Nagenthraraja -- IT22289384
+Instead of using libraries, raw register reading was implemented to ensure compatibility.
 
-------------------------------------------------------------------------
+### Output Sample
 
-⭐ *This project demonstrates the integration of IoT sensors with
-microcontrollers as a foundation for real-time data analytics.*
+```
+Accel X: -48 | Y: -84 | Z: 16112 || Gyro X: 232 | Y: 211 | Z: -53
+Accel X: -80 | Y: -68 | Z: 16176 || Gyro X: 210 | Y: 85 | Z: -102
+...
+```
+
+---
+
+## 🤔 Why Values Change Without Movement?
+
+Sensor readings fluctuate due to:
+
+* Environmental vibrations
+* Electrical noise
+* Sensor sensitivity
+* Lack of filtering
+
+This is normal behavior.
+
+---
+
+## 📌 Key Learnings
+
+* ESP32-C3 USB Serial configuration (CDC enabled)
+* I2C communication setup
+* Sensor detection using I2C scanner
+* Handling non-standard sensor responses
+* Reading raw accelerometer and gyroscope data
+
+---
+
+
+## ✅ Status
+
+✔ ESP32 Tested
+✔ MPU6050 Connected
+✔ Data Reading Successful
+
+---
+
+## 📬 Author Notes
+
+This project is part of a step-by-step hardware integration process using ESP32-C3.
+
+---
